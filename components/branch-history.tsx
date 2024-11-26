@@ -14,24 +14,24 @@ export function BranchHistoryList({ history, onSelect }: BranchHistoryProps) {
   if (!Array.isArray(history) || history.length === 0) return null;
 
   return (
-    <Card className="p-4">
-      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+    <Card className="p-4 bg-[#131313]  border border-[#ffffff1f] shadow-sm">
+      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-300">
         <History className="h-5 w-5" />
-        Recent Branches
+        Recent Branche: ({history.length})
       </h3>
       <ScrollArea className="h-48">
         <div className="space-y-4">
           {history.map((entry, index) => (
             <Card
               key={`${entry.id}-${index}`}
-              className="p-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer"
+              className="p-3 hover:bg-[#1b1b1b]/30 dark:hover:bg-gray-800/50 cursor-pointer border border-[#ffffff1f]  bg-[#1b1b1b]"
               onClick={() => onSelect(entry)}
             >
               <div className="flex items-center gap-2">
                 {entry.commitType && (
-                  <span className="text-lg">{entry.commitType.emoji}</span>
+                  <span className="text-lg text-gray-300">{entry.commitType.emoji}</span>
                 )}
-                <p className="font-medium">{entry.branch}</p>
+                <p className="font-medium text-gray-300">{entry.branch}</p>
               </div>
               <p className="text-sm text-gray-500">
                 {new Date(entry.timestamp).toLocaleDateString()}

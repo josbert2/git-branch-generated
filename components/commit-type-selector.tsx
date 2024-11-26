@@ -49,13 +49,13 @@ export function CommitTypeSelector({ onSelect }: CommitTypeSelectorProps) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between placeholder:text-sm focus-visible:outline-[#ffffff1f] bg-[#1b1b1b] h-11 text-[#b2b2b2a3]"
         >
           {selectedType ? (
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 text-[#ffffff1f]">
               <span>{selectedType.emoji}</span>
               <span>{selectedType.prefix}</span>
             </span>

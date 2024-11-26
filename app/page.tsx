@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { GitBranch, Copy, Loader2 } from "lucide-react";
+import { GitBranch, Copy, Loader2, Terminal, GitCommitVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -10,6 +10,10 @@ import { CommitTypeSelector } from "@/components/commit-type-selector";
 import { BranchHistoryList } from "@/components/branch-history";
 import { CommitType } from "@/lib/commit-types";
 import { BranchHistory } from "@/lib/types";
+import Particles from "@/components/particles";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+
 
 export default function Home() {
   const [identifier, setIdentifier] = useState("");
@@ -123,14 +127,19 @@ This commit introduces ${selectedCommitType.prefix === 'fix' ? 'a fix for' : 'fu
   };
 
   return (
-    <main className="min-h-screen  p-4 md:p-8">
+    <main className="min-h-screen  p-4 md:p-8 flex items-center">
+      <Particles
+        className="absolute inset-0 -z-10 animate-fade-in"
+        quantity={100}
+      />
       <div className="max-w-4xl mx-auto space-y-8">
-        <Card className="p-6 backdrop-blur-lg bg-[#131313]  border border-[#ffffff1f]">
-          <h1 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+        <Card className="p-6 backdrop-blur-lg bg-[#131313]  border border-[#ffffff1f] shadow-sm">
+          <div className="absolute z-[-1] inset-0 size-full bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] dark:bg-[radial-gradient(#ffffff22_1px,transparent_1px)] lab-bg [background-size:16px_16px]"></div>
+          <h1 className="z-10 text-base text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display sm:text-6xl md:text-5xl text-center mb-4 whitespace-nowrap bg-clip-text font-bold">
             Branch Name Generator
           </h1>
           
-          <p className="text-gray-600 dark:text-gray-300 text-center mb-8">
+          <p className="text-gray-300 dark:text-gray-300 text-center mb-8">
             Generate standardized branch names and commit messages for your Kanban-style workflow.
             Simply enter your ticket ID (KAN-XX) and a descriptive title.
           </p>
@@ -141,13 +150,13 @@ This commit introduces ${selectedCommitType.prefix === 'fix' ? 'a fix for' : 'fu
                 placeholder="KAN-14"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                className=""
+                className="text-white"
               />
               <Input
                 placeholder="Feature description (e.g., Add user authentication)"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className=""
+                className="text-white"
               />
               <CommitTypeSelector onSelect={setSelectedCommitType} />
             </div>
@@ -174,15 +183,18 @@ This commit introduces ${selectedCommitType.prefix === 'fix' ? 'a fix for' : 'fu
             </div>
 
             {(branchName || commitMessage) && (
-              <Card className="p-4 space-y-4 bg-gray-50 dark:bg-gray-800/50">
+              <Card className="p-4 space-y-4 bg-[#131313]  border border-[#ffffff1f] shadow-sm">
                 {branchName && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 ">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      <h3 className="text-lg font-semibold  flex items-center gap-2 text-gray-300">
+                        <Terminal className="h-5 w-5" />
                         Branch Command
+                        
                       </h3>
                       <Button
                         variant="ghost"
+                        className="hover:bg-[#1b1b1b]"
                         size="sm"
                         onClick={() =>
                           copyToClipboard(
@@ -191,32 +203,37 @@ This commit introduces ${selectedCommitType.prefix === 'fix' ? 'a fix for' : 'fu
                           )
                         }
                       >
-                        <Copy className="h-4 w-4" />
+                        <Copy className="h-4 w-4 text-white" />
                       </Button>
                     </div>
-                    <code className="block p-2 bg-gray-100 dark:bg-gray-800 rounded text-sm">
+                    <code className="block p-2 bg-[#1b1b1b] text-white border border-[#ffffff1f]  dark:bg-gray-800 rounded text-sm">
+                    
                       git checkout -b {branchName}
+                   
                     </code>
+               
                   </div>
                 )}
 
                 {commitMessage && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 pt-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                      <h3 className="text-lg font-semibold  flex items-center gap-2 text-gray-300">
+                        <GitCommitVertical className="h-5 w-5 text-white" />
                         Commit Message
                       </h3>
                       <Button
                         variant="ghost"
                         size="sm"
+                        className="hover:bg-[#1b1b1b]"
                         onClick={() =>
                           copyToClipboard(commitMessage, "Commit message")
                         }
                       >
-                        <Copy className="h-4 w-4" />
+                        <Copy className="h-4 w-4 text-white" />
                       </Button>
                     </div>
-                    <pre className="whitespace-pre-wrap p-2 bg-gray-100 dark:bg-gray-800 rounded text-sm">
+                    <pre className="whitespace-pre-wrap p-2 bg-[#1b1b1b] text-white border border-[#ffffff1f]  dark:bg-gray-800 rounded text-sm">
                       {commitMessage}
                     </pre>
                   </div>
