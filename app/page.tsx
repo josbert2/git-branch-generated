@@ -123,9 +123,9 @@ This commit introduces ${selectedCommitType.prefix === 'fix' ? 'a fix for' : 'fu
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 animate-gradient-x p-4 md:p-8">
+    <main className="min-h-screen  p-4 md:p-8">
       <div className="max-w-4xl mx-auto space-y-8">
-        <Card className="p-6 backdrop-blur-lg bg-white/90 dark:bg-gray-900/90">
+        <Card className="p-6 backdrop-blur-lg bg-[#131313]  border border-[#ffffff1f]">
           <h1 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
             Branch Name Generator
           </h1>
@@ -141,13 +141,13 @@ This commit introduces ${selectedCommitType.prefix === 'fix' ? 'a fix for' : 'fu
                 placeholder="KAN-14"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                className="text-lg"
+                className=""
               />
               <Input
                 placeholder="Feature description (e.g., Add user authentication)"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="text-lg"
+                className=""
               />
               <CommitTypeSelector onSelect={setSelectedCommitType} />
             </div>
